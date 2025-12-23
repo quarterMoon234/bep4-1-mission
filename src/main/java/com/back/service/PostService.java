@@ -6,8 +6,8 @@ import com.back.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
 
@@ -16,6 +16,8 @@ public class PostService {
     }
 
     public Post write(Member author, String title, String content) {
-        return postRepository.save(new Post(author, title, content));
+        Post post = new Post(author, title, content);
+
+        return postRepository.save(post);
     }
 }
