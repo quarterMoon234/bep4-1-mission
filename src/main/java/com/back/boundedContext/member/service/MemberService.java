@@ -28,4 +28,8 @@ public class MemberService {
 
         return memberRepository.save(new Member(username, password, nickname));
     }
+
+    public Optional<Member> findById(int id) {
+        return memberRepository.findById(id);
+    }
 }

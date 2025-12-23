@@ -3,6 +3,9 @@ package com.back.boundedContext.post.service;
 import com.back.boundedContext.member.entity.Member;
 import com.back.boundedContext.post.entity.Post;
 import com.back.boundedContext.post.repository.PostRepository;
+import com.back.global.eventPublisher.EventPublisher;
+import com.back.global.shared.post.dto.PostDto;
+import com.back.global.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final EventPublisher eventPublisher;
 
     public long count() {
         return postRepository.count();
@@ -19,10 +23,11 @@ public class PostService {
 
     public Post write(Member author, String title, String content) {
         Post post = new Post(author, title, content);
+        Post savedPost = postRepository.save(post);
 
-        author.increaseActivityScore(3);
+        eventPublisher.publish(new PostCreatedEvent(new PostDto(savedPost)));
 
-        return postRepository.save(post);
+        return savedPost;
     }
 
     public Optional<Post> findById(int id) {
