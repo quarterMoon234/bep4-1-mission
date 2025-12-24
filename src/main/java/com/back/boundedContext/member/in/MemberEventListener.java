@@ -1,7 +1,7 @@
 package com.back.boundedContext.member.in;
 
 import com.back.boundedContext.member.domain.Member;
-import com.back.boundedContext.member.app.MemberService;
+import com.back.boundedContext.member.app.MemberFacade;
 import com.back.global.shared.post.event.PostCommentCreatedEvent;
 import com.back.global.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 @Component
 @RequiredArgsConstructor
 public class MemberEventListener {
-    private final MemberService memberService;
+    private final MemberFacade memberService;
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     @Transactional(propagation = Propagation.REQUIRES_NEW)

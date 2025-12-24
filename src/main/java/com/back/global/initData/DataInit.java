@@ -1,7 +1,7 @@
 package com.back.global.initData;
 
 import com.back.boundedContext.member.domain.Member;
-import com.back.boundedContext.member.app.MemberService;
+import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.app.PostService;
 import jakarta.transaction.Transactional;
@@ -15,12 +15,12 @@ import org.springframework.context.annotation.Lazy;
 @Slf4j
 public class DataInit {
     private final DataInit self;
-    private final MemberService memberService;
+    private final MemberFacade memberService;
     private final PostService postService;
 
     public DataInit(
             @Lazy DataInit self,
-            MemberService memberService,
+            MemberFacade memberService,
             PostService postService
     ) {
         this.self = self;
