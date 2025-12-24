@@ -5,9 +5,9 @@ import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.eventPublisher.EventPublisher;
 import com.back.global.rsData.RsData;
-import com.back.global.shared.member.out.MemberApiClient;
-import com.back.global.shared.post.dto.PostDto;
-import com.back.global.shared.post.event.PostCreatedEvent;
+import com.back.shared.member.out.MemberApiClient;
+import com.back.shared.post.dto.PostDto;
+import com.back.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.back.global.shared.post.dto;
+package com.back.shared.post.dto;
 
 import com.back.boundedContext.post.domain.Post;
 import lombok.AllArgsConstructor;

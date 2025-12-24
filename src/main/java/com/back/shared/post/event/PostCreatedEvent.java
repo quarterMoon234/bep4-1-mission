@@ -1,6 +1,6 @@
-package com.back.global.shared.post.event;
+package com.back.shared.post.event;
 
-import com.back.global.shared.post.dto.PostDto;
+import com.back.shared.post.dto.PostDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
