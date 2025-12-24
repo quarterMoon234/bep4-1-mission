@@ -1,11 +1,11 @@
 package com.back.boundedContext.post.app;
 
-import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.eventPublisher.EventPublisher;
 import com.back.global.rsData.RsData;
+import com.back.global.shared.member.out.MemberApiClient;
 import com.back.global.shared.post.dto.PostDto;
 import com.back.global.shared.post.event.PostCreatedEvent;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class PostWriteUseCase {
     private final PostRepository postRepository;
     private final EventPublisher eventPublisher;
-    private final MemberFacade memberFacade;
+    private final MemberApiClient memberApiClient;
 
     public RsData<Post> write(Member author, String title, String content) {
         Post post = new Post(author, title, content);
@@ -24,7 +24,7 @@ public class PostWriteUseCase {
 
         eventPublisher.publish(new PostCreatedEvent(new PostDto(savedPost)));
 
-        String randomSecureTip = memberFacade.getRandomSecureTip();
+        String randomSecureTip = memberApiClient.getRandomSecureTip();
 
         return new RsData<>(
                 "201-1",
