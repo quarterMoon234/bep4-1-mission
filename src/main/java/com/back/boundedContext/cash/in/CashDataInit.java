@@ -39,7 +39,7 @@ public class CashDataInit {
         CashMember user1Member = cashFacade.findCashMemberByUsername("user1").get();
         CashMember user2Member = cashFacade.findCashMemberByUsername("user2").get();
 
-        Wallet user1Wallet = cashFacade.findWalletByHolder(user1Member).get();
+        Wallet user1Wallet = cashFacade.findWalletByCashMember(user1Member).get();
 
         if (user1Wallet.hasBalance()) return;
 
@@ -47,7 +47,7 @@ public class CashDataInit {
         user1Wallet.credit(100_000, CashLog.EventType.충전__무통장입금);
         user1Wallet.credit(50_000, CashLog.EventType.충전__무통장입금);
 
-        Wallet user2Wallet = cashFacade.findWalletByHolder(user2Member).get();
+        Wallet user2Wallet = cashFacade.findWalletByCashMember(user2Member).get();
 
         if (user2Wallet.hasBalance()) return;
 

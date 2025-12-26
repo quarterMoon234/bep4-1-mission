@@ -2,8 +2,6 @@ package com.back.boundedContext.cash.app;
 
 import com.back.boundedContext.cash.domain.CashMember;
 import com.back.boundedContext.cash.domain.Wallet;
-import com.back.boundedContext.cash.out.CashMemberRepository;
-import com.back.boundedContext.cash.out.WalletRepository;
 import com.back.shared.member.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,36 +12,28 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CashFacade {
-    private final CashMemberRepository cashMemberRepository;
-    private final WalletRepository walletRepository;
+    private final CashCreateWalletUseCase cashCreateWalletUseCase;
+    private final CashSyncMemberUseCase cashSyncMemberUseCase;
+    private final CashSupport cashSupport;
 
     @Transactional
     public CashMember syncMember(MemberDto memberDto) {
-        CashMember cashMember = new CashMember(
-                memberDto.getId(),
-                memberDto.getCreateDate(),
-                memberDto.getModifyDate(),
-                memberDto.getUsername(),
-                "",
-                memberDto.getNickname(),
-                memberDto.getActivityScore()
-        );
-
-        return cashMemberRepository.save(cashMember);
+        return cashSyncMemberUseCase.syncMember(memberDto);
     }
 
     @Transactional
     public Wallet createWallet(CashMember cashMember) {
-        Wallet wallet = new Wallet(cashMember);
-
-        return walletRepository.save(wallet);
+        return cashCreateWalletUseCase.createWallet(cashMember);
     }
 
+    @Transactional(readOnly = true)
     public Optional<CashMember> findCashMemberByUsername(String user) {
-        return cashMemberRepository.findByUsername(user);
+        return cashSupport.findCashMemberByUsername(user);
     }
 
-    public Optional<Wallet> findWalletByHolder(CashMember cashMember) {
-        return walletRepository.findByCashMember(cashMember);
+    @Transactional(readOnly = true)
+    public Optional<Wallet> findWalletByCashMember(CashMember cashMember) {
+        return cashSupport.findWalletByCashMember(cashMember);
     }
+
 }
