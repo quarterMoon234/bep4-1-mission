@@ -1,7 +1,7 @@
 package com.back.boundedContext.post.app;
 
-import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
 import com.back.boundedContext.post.out.PostRepository;
 import com.back.global.eventPublisher.EventPublisher;
 import com.back.global.rsData.RsData;
@@ -18,11 +18,14 @@ public class PostWriteUseCase {
     private final EventPublisher eventPublisher;
     private final MemberApiClient memberApiClient;
 
-    public RsData<Post> write(Member author, String title, String content) {
-        Post post = new Post(author, title, content);
-        Post savedPost = postRepository.save(post);
+    public RsData<Post> write(PostMember author, String title, String content) {
+        Post post = postRepository.save(new Post(author, title, content));
 
-        eventPublisher.publish(new PostCreatedEvent(new PostDto(savedPost)));
+        eventPublisher.publish(
+                new PostCreatedEvent(
+                        new PostDto(post)
+                )
+        );
 
         String randomSecureTip = memberApiClient.getRandomSecureTip();
 
@@ -30,6 +33,7 @@ public class PostWriteUseCase {
                 "201-1",
                 "%d번 글이 생성되었습니다. 보안 팁 : %s"
                         .formatted(post.getId(), randomSecureTip),
-                savedPost);
+                post
+        );
     }
 }

@@ -4,6 +4,7 @@ import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.app.PostFacade;
 import com.back.boundedContext.post.domain.Post;
+import com.back.boundedContext.post.domain.PostMember;
 import com.back.global.rsData.RsData;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -54,9 +55,9 @@ public class DataInit {
     public void makeBasePosts() {
         if (postService.count() > 0) return;
 
-        Member user1Member = memberService.findByUsername("user1").get();
-        Member user2Member = memberService.findByUsername("user2").get();
-        Member user3Member = memberService.findByUsername("user3").get();
+        PostMember user1Member = postService.findPostMemberByUsername("user1").get();
+        PostMember user2Member = postService.findPostMemberByUsername("user2").get();
+        PostMember user3Member = postService.findPostMemberByUsername("user3").get();
 
         RsData<Post> post1RsData = postService.write(user1Member, "제목1", "내용1");
         log.debug(post1RsData.getMsg());
@@ -86,9 +87,9 @@ public class DataInit {
         Post post5 = postService.findById(5).get();
         Post post6 = postService.findById(6).get();
 
-        Member user1Member = memberService.findByUsername("user1").get();
-        Member user2Member = memberService.findByUsername("user2").get();
-        Member user3Member = memberService.findByUsername("user3").get();
+        PostMember user1Member = postService.findPostMemberByUsername("user1").get();
+        PostMember user2Member = postService.findPostMemberByUsername("user2").get();
+        PostMember user3Member = postService.findPostMemberByUsername("user3").get();
 
         if (post1.hasComments()) return;
 

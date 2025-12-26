@@ -1,6 +1,5 @@
 package com.back.boundedContext.post.app;
 
-import com.back.boundedContext.member.domain.Member;
 import com.back.boundedContext.post.domain.Post;
 import com.back.boundedContext.post.domain.PostMember;
 import com.back.boundedContext.post.out.PostMemberRepository;
@@ -17,8 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PostFacade {
     private final PostRepository postRepository;
-    private final PostWriteUseCase postWriteUseCase;
     private final PostMemberRepository postMemberRepository;
+    private final PostWriteUseCase postWriteUseCase;
 
     @Transactional(readOnly = true)
     public long count() {
@@ -26,7 +25,7 @@ public class PostFacade {
     }
 
     @Transactional
-    public RsData<Post> write(Member author, String title, String content) {
+    public RsData<Post> write(PostMember author, String title, String content) {
         return postWriteUseCase.write(author, title, content);
     }
 
@@ -35,17 +34,23 @@ public class PostFacade {
         return postRepository.findById(id);
     }
 
-    public PostMember syncMember(MemberDto memberDto) {
+    @Transactional
+    public PostMember syncMember(MemberDto member) {
         PostMember postMember = new PostMember(
-                memberDto.getId(),
-                memberDto.getCreateDate(),
-                memberDto.getModifyDate(),
-                memberDto.getUsername(),
+                member.getId(),
+                member.getCreateDate(),
+                member.getModifyDate(),
+                member.getUsername(),
                 "",
-                memberDto.getNickname(),
-                memberDto.getActivityScore()
-                );
+                member.getNickname(),
+                member.getActivityScore()
+        );
 
         return postMemberRepository.save(postMember);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<PostMember> findPostMemberByUsername(String username) {
+        return postMemberRepository.findByUsername(username);
     }
 }
