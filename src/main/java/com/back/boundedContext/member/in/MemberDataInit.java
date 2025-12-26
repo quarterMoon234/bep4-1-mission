@@ -2,7 +2,6 @@ package com.back.boundedContext.member.in;
 
 import com.back.boundedContext.member.app.MemberFacade;
 import com.back.boundedContext.member.domain.Member;
-import com.back.boundedContext.post.app.PostFacade;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationRunner;
@@ -19,8 +18,7 @@ public class MemberDataInit {
 
     public MemberDataInit(
             @Lazy MemberDataInit self,
-            MemberFacade memberService,
-            PostFacade postService
+            MemberFacade memberService
     ) {
         this.self = self;
         this.memberService = memberService;
