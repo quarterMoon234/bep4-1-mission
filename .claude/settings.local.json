@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(./gradlew clean build:*)",
-      "Bash(./gradlew clean compileJava:*)"
+      "Bash(./gradlew clean compileJava:*)",
+      "Bash(./gradlew test:*)"
     ],
     "deny": [],
     "ask": []
