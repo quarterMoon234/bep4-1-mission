@@ -134,12 +134,9 @@ public class MarketDataInit {
                 .orElseThrow(() -> new IllegalStateException("user3 MarketMember not found"));
 
         // Cart가 없으면 생성
-        Cart cart1 = marketFacade.findCartByBuyer(user1Member)
-                .orElseGet(() -> marketFacade.createCart(new com.back.shared.market.dto.MarketMemberDto(user1Member)).getData());
-        Cart cart2 = marketFacade.findCartByBuyer(user2Member)
-                .orElseGet(() -> marketFacade.createCart(new com.back.shared.market.dto.MarketMemberDto(user2Member)).getData());
-        Cart cart3 = marketFacade.findCartByBuyer(user3Member)
-                .orElseGet(() -> marketFacade.createCart(new com.back.shared.market.dto.MarketMemberDto(user3Member)).getData());
+        Cart cart1 = marketFacade.findCartByBuyer(user1Member).get();
+        Cart cart2 = marketFacade.findCartByBuyer(user2Member).get();
+        Cart cart3 = marketFacade.findCartByBuyer(user3Member).get();
 
         Product product1 = marketFacade.findProductById(1)
                 .orElseThrow(() -> new IllegalStateException("Product 1 not found"));

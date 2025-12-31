@@ -7,9 +7,7 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor(
-        onConstructor_ = @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-)
+@AllArgsConstructor
 @Getter
 public class WalletDto {
     private final int id;
@@ -18,16 +16,5 @@ public class WalletDto {
     private final int holderId;
     private final String holderName;
     private final long balance;
-
-    public WalletDto(Wallet wallet) {
-        this(
-                wallet.getId(),
-                wallet.getCreateDate(),
-                wallet.getModifyDate(),
-                wallet.getCashMember().getId(),
-                wallet.getCashMember().getUsername(),
-                wallet.getBalance()
-        );
-    }
 }
 

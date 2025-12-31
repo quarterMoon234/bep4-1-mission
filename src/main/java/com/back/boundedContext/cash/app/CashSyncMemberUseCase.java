@@ -33,7 +33,7 @@ public class CashSyncMemberUseCase {
         if (cashMemberExists) {
             eventPublisher.publish(
                     new CashMemberCreatedEvent(
-                            new CashMemberDto(cashMember)
+                            cashMember.toDto()
                     )
             );
         }
